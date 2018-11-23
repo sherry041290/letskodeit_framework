@@ -19,9 +19,9 @@ class SeleniumDriver():
             return By.XPATH
         elif locatorType == "css":
             return By.CSS_SELECTOR
-        elif locatorType == "classname":
+        elif locatorType == "class":
             return By.CLASS_NAME
-        elif locatorType == "linktext":
+        elif locatorType == "link":
             return By.LINK_TEXT
         else:
             print("Locator type " + locatorType + " not correct/supported")
@@ -42,9 +42,18 @@ class SeleniumDriver():
         try:
             element = self.getElement(locator, locatorType)
             element.click()
-            print("Clicked on element with locator: " + locator + " locatorType: " + locatorType)
+            # print("Clicked on element with locator: " + locator + " locatorType: " + locatorType)
         except:
-            print("Cannot click on the element with locator: " + locator + " locatorType: " + locatorType)
+            # print("Cannot click on the element with locator: " + locator + " locatorType: " + locatorType)
+            print_stack()
+
+    def sendKeys(self, data, locator, locatorType="id"):
+        try:
+            element = self.getElement(locator, locatorType)
+            element.send_keys(data)
+            # print("Sent data on element with locator: " + locator + " locatorType: " + locatorType)
+        except:
+            # print("Cannot send data on the element with locator: " + locator + " locatorType: " + locatorType)
             print_stack()
 
     def isElementPresent(self, locator, byType):
