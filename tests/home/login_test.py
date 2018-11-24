@@ -1,23 +1,25 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from pages.home.login_page import Loginpage
 import unittest
+import pytest
 
 
+@pytest.mark.usefixture("oneTimeSetUp","setUp")
 class LoginTests(unittest.TestCase):
 
-    def test_validLogin(self):
-        base_url = "https://letskodeit.teachable.com/"
-        driver = webdriver.Firefox()
-        driver.maximize_window()
-        driver.implicitly_wait(3)
-        driver.get(base_url)
+    @pytest.fixture(autouse=2)
+    def classSetUp(self, oneTimeSetUp):
+        self.lg = Loginpage(self.driver)
 
-        lg = Loginpage(driver)
-        lg.login("test@email.com", "abcabc")
-        userIcon = driver.find_element(By.XPATH, ".//*[@id='navbar']//span[text()='Test User']")
-        if userIcon is not None:
-            print("Login Successful")
-        else:
-            print("Login Failed")
+    @pytest.mark.run(order=2)
+    def test_validLogin(self):
+        self.lg.clearFields()
+        self.lg.login("test@email.com", "abcabc")
+        result = self.lg.verifyLoginSuccessful()
+        assert result == True
+
+    @pytest.mark.run(order=1)
+    def test_invalidLogin(self):
+        self.lg.login("test@email.com", "abcabccc")
+        result = self.lg.verifyLoginFailed()
+        assert result == True
 
