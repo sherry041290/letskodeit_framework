@@ -35,7 +35,7 @@ class Loginpage(SeleniumDriver):
         self.clickLoginButton()
 
     def verifyLoginSuccessful(self):
-        result = self.isElementPresent(".//*[@id='navbar']//span[text()='Test User']", byType="xpath")
+        result = self.isElementPresent("//*[@id='navbar']//span[text()='Test User']", byType="xpath")
         return result
 
     def verifyLoginFailed(self):
@@ -47,4 +47,10 @@ class Loginpage(SeleniumDriver):
         emailField.clear()
         passwordField = self.getElement(locator=self._password_field)
         passwordField.clear()
+
+    def verifyTitle(self):
+        if "Let's Kode It" in self.getTitle():
+            return True
+        else:
+            return False
 
