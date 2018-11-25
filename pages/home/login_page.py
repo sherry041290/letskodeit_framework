@@ -35,11 +35,11 @@ class Loginpage(SeleniumDriver):
         self.clickLoginButton()
 
     def verifyLoginSuccessful(self):
-        result = self.isElementPresent("//*[@id='navbar']//span[text()='Test User']", byType="xpath")
+        result = self.isElementPresent("//*[@id='navbar']//span[text()='Test User']", locatorType="xpath")
         return result
 
     def verifyLoginFailed(self):
-        result = self.isElementPresent("//div[contains(text(), 'Invalid email or password.')]", byType="xpath")
+        result = self.isElementPresent("//div[contains(text(), 'Invalid email or password.')]", locatorType="xpath")
         return result
 
     def clearFields(self):
@@ -49,7 +49,7 @@ class Loginpage(SeleniumDriver):
         passwordField.clear()
 
     def verifyTitle(self):
-        if "Let's Kode It" in self.getTitle():
+        if "Sherry" in self.getTitle():
             return True
         else:
             return False

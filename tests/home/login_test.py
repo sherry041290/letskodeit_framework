@@ -14,13 +14,13 @@ class LoginTests(unittest.TestCase):
 
     @pytest.mark.run(order=2)
     def test_validLogin(self):
-        self.lg.login("test@email.com", "abcabc")
-        # result1 = self.lg.verifyTitle()
-        # self.test_status.mark(result1, "Title Verified")
         self.lg.clearFields()
+        self.lg.login("test@email.com", "abcabc")
+        result1 = self.lg.verifyTitle()
+        self.test_status.mark(result1, "Title Verified")
         result2 = self.lg.verifyLoginSuccessful()
-        # self.test_status.markFinal("test_validLogin", result2, "Login was successful")
-        assert result2 == True
+        self.test_status.markFinal("test_validLogin", result2, "Login was successful")
+        # assert result2 == True
 
     @pytest.mark.run(order=1)
     def test_invalidLogin(self):

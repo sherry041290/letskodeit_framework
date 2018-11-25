@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import *
 import utilities.custom_logger as cl
 import logging
+import time
+import os
 
 class SeleniumDriver():
 
@@ -12,6 +14,24 @@ class SeleniumDriver():
 
     def __init__(self, driver):
         self.driver = driver
+
+    def screenShot(self, result_message):
+        file_name = result_message + "." + str(round(time.time()*1000)) + ".png"
+        screenshot_directory = "../screenshots/"
+        relative_file_name = screenshot_directory + file_name
+        current_directory = os.path.dirname(__file__)
+        destination_file = os.path.join(current_directory, relative_file_name)
+        destination_directory = os.path.join(current_directory, screenshot_directory)
+
+        try:
+            if not os.path.exists(destination_directory):
+                os.makedirs(destination_directory)
+            self.driver.save_screenshot(destination_file)
+            self.log.info("Screenshot save to directory: " + destination_file)
+
+        except:
+            self.log.error("### Exception Occurred")
+            print_stack()
 
     def getTitle(self):
         return self.driver.title
@@ -63,22 +83,22 @@ class SeleniumDriver():
             self.log.info("Cannot send data on the element with locator: " + locator + " locatorType: " + locatorType)
             # print_stack()
 
-    def isElementPresent(self, locator, byType):
+    def isElementPresent(self, locator, locatorType="id"):
         try:
-            element = self.driver.find_element(byType, locator)
+            element = self.driver.find_element(locatorType, locator)
             if element is not None:
                 self.log.info("Element Found")
                 return True
             else:
-                self.log.info("Element not found")
+                self.log.info("Element not found" +element)
                 return False
         except:
             self.log.info("Element not found")
             return False
 
-    def elementPresenceCheck(self, locator, byType):
+    def elementPresenceCheck(self, locator, locatorType="id"):
         try:
-            elementList = self.driver.find_elements(byType, locator)
+            elementList = self.driver.find_elements(locatorType, locator)
             if len(elementList) > 0:
                 self.log.info("Element Found")
                 return True
