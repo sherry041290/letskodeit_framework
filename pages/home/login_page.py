@@ -3,7 +3,7 @@ import logging
 from base.basepage import BasePage
 
 
-class Loginpage(BasePage):
+class LoginPage(BasePage):
     log = cl.customLogger(logging.DEBUG)
 
     def __init__(self, driver):
@@ -18,6 +18,7 @@ class Loginpage(BasePage):
 
     def clickLoginLink(self):
         self.elementClick(self._login_link, locatorType="link")
+        self.wait(waitMilliseconds=1000)
 
     def enterEmail(self, email):
         self.sendKeys(email, self._email_field)
@@ -50,5 +51,8 @@ class Loginpage(BasePage):
 
     def verifyTitle(self):
         return self.verifyPageTitle("Let's Kode It")
+
+    def wait(self, waitMilliseconds):
+        self.driver.implicitly_wait(waitMilliseconds)
 
 

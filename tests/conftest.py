@@ -1,6 +1,6 @@
 import pytest
-from selenium import webdriver
 from base.webdriverfactory import WebDriverFactory
+from pages.home.login_page import LoginPage
 
 
 @pytest.fixture()
@@ -13,15 +13,17 @@ def setUp():
 @pytest.fixture(scope="class")
 def oneTimeSetUp(request, browser):
     print("Running one time setUp")
-
     wdf = WebDriverFactory(browser)
     driver = wdf.getWebDriverInstance()
+    lp = LoginPage(driver)
+    driver.implicitly_wait(10)
+    lp.login("test@email.com", "abcabc")
 
     if request.cls is not None:
         request.cls.driver = driver
 
     yield driver
-    driver.quit()
+    # driver.quit()
     print("Running one time tearDown")
 
 

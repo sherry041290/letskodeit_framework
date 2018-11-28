@@ -1,4 +1,4 @@
-from pages.home.login_page import Loginpage
+from pages.home.login_page import LoginPage
 from utilities.result_status import ResultStatus
 import unittest
 import pytest
@@ -9,7 +9,7 @@ class LoginTests(unittest.TestCase):
 
     @pytest.fixture(autouse=2)
     def classSetUp(self, oneTimeSetUp):
-        self.lg = Loginpage(self.driver)
+        self.lg = LoginPage(self.driver)
         self.test_status = ResultStatus(self.driver)
 
     @pytest.mark.run(order=2)
