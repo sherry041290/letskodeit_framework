@@ -10,7 +10,7 @@ import time
 
 @pytest.mark.usefixture("oneTimeSetUp", "setUp")
 @ddt
-class EnrollMultiTest(unittest.TestCase):
+class EnrollCSVDataTest(unittest.TestCase):
 
     @pytest.fixture(autouse=2)
     def objectSetUp(self, oneTimeSetUp):

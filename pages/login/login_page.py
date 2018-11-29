@@ -1,4 +1,5 @@
 import utilities.custom_logger as cl
+from pages.navigation.navigation_page import NavigationPage
 import logging
 from base.basepage import BasePage
 
@@ -6,15 +7,18 @@ from base.basepage import BasePage
 class LoginPage(BasePage):
     log = cl.customLogger(logging.DEBUG)
 
+
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
+        self.nav = NavigationPage(self.driver)
 
     # Locator
     _login_link = "Login"
     _email_field = "user_email"
     _password_field = "user_password"
-    _login_button = ".login-button"
+    _login_button = "commit"
+    # _user_setting_icon = "//div[@id='navbar']//span[text()='Test User']"
 
     def clickLoginLink(self):
         self.elementClick(self._login_link, locatorType="link")
@@ -27,7 +31,7 @@ class LoginPage(BasePage):
         self.sendKeys(password, self._password_field)
 
     def clickLoginButton(self):
-        self.elementClick(self._login_button, locatorType="css")
+        self.elementClick(self._login_button, locatorType="name")
 
     def login(self, email="", password=""):
         self.clickLoginLink()
@@ -54,5 +58,11 @@ class LoginPage(BasePage):
 
     def wait(self, waitMilliseconds):
         self.driver.implicitly_wait(waitMilliseconds)
+
+    def logout(self):
+        self.nav.navigateToUseSetting()
+        # self.elementClick(locator="Log Out", locatorType="link")
+        self.elementClick(locator="//div[@id='navbar']//a[@href='/sign_out']",
+                          locatorType="xpath")
 
 

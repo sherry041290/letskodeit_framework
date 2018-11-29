@@ -27,6 +27,7 @@ class WebDriverFactory():
         elif self.browser == "chrome":
             # Set chrome driver
             driver = webdriver.Chrome()
+            driver.set_window_size(1440, 900)
         else:
             driver = webdriver.Firefox()
         # Setting Driver Implicit Time out for An Element
