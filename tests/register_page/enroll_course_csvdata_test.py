@@ -1,4 +1,5 @@
 from pages.course.register_courses_pages import RegisterCoursePage
+from pages.navigation.navigation_page import NavigationPage
 from utilities.result_status import ResultStatus
 import pytest
 import unittest
@@ -15,9 +16,10 @@ class EnrollMultiTest(unittest.TestCase):
     def objectSetUp(self, oneTimeSetUp):
         self.courses = RegisterCoursePage(self.driver)
         self.test_status = ResultStatus(self.driver)
+        self.navigate = NavigationPage(self.driver)
 
     def setUp(self):
-        self.courses.allCourse()
+        self.navigate.navigateToAllCourse()
 
     @pytest.mark.run(order=1)
     @data(*getCSVData("C:/Users/lenovo/PycharmProjects/letskodeit/testdata.csv"))
@@ -33,6 +35,4 @@ class EnrollMultiTest(unittest.TestCase):
         time.sleep(1)
         self.driver.back()
         time.sleep(1)
-
-        # self.courses.allCourse()
 
