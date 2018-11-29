@@ -13,12 +13,12 @@ class RegisterCoursePage(BasePage):
     _search_box = "search-courses"
     _search_course_icon = "search-course-button"
     _course = "//div[contains(@class,'course-listing-title') and contains(text(),'{0}')]"
-    _all_courses = "course-listing-title"
+    _all_courses = "All Courses"  # link text
     _enroll_button = "enroll-button-top"
     _cc_num = "//input[@aria-label='Credit or debit card number']"
-    _cc_exp = "exp-date"
-    _cc_cvv = "cvc"
-    _zip = "postal"
+    _cc_exp = "exp-date"  # name
+    _cc_cvv = "cvc"   # name
+    _zip = "postal"   # name
     _agree_to_terms_checkbox = "agreed_to_terms_checkbox"
     _submit_enroll = "//button[@id='confirm-purchase']/parent::div"
 
@@ -79,6 +79,8 @@ class RegisterCoursePage(BasePage):
                                 info="Enroll Button")
         return not result
 
+    def allCourse(self):
+        self.elementClick(self._all_courses, "link")
 
 
 

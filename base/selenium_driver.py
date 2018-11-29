@@ -320,3 +320,41 @@ class SeleniumDriver():
         except:
             self.log.error("Element :: '" + info + "' state could not be found")
         return enabled
+
+    def selectDropdown(self, optionToSelect="", info="", byValue=False, byIndex=False, locator="", locatorType="id", timeToWait=0):
+        """
+        Select option from a dropdown (default by visible text)
+
+        Parameters:
+            1. Required:
+                None
+            2. Optional:
+                1. locator         - Locator of the element to check
+                2. optionToSelect  - Option to select from the dropdown (Visible Text / Value / Index)
+                3. info            - Information about the optionToSelect, usually text on the optionToSelect
+                4. byValue         - Provide True if you want to select by value
+                5. byIndex         - Provide True if you want to select by index
+                6. locatorType     - Type of the locator(id(default), xpath, css, className, linkText)
+                7. timeToWait      - Time you want to wait after selecting the element
+        Returns:
+            None
+        Exception:
+            None
+        """
+        dropDownElement = self.getElement(locator, locatorType=locatorType)
+        try:
+            select = Select(dropDownElement)
+            if byValue:
+                select.select_by_value(optionToSelect)
+            elif byIndex:
+                select.select_by_index(optionToSelect)
+            else:
+                select.select_by_visible_text(optionToSelect)
+            self.log.info("Selected option --> :: '" + optionToSelect + "' from dropdown:: '" + info + "'")
+            self.log.info("Waiting after selecting the element for " + str(timeToWait) + " seconds")
+            time.sleep(timeToWait)
+            return True
+        except:
+            self.log.error("Could not select option --> :: '" + optionToSelect + "' from dropdown:: '" + info + "'")
+            print_stack()
+            return False
