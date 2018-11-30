@@ -21,7 +21,7 @@ class EnrollCSVDataTest(unittest.TestCase):
     def setUp(self):
         self.navigate.navigateToAllCourse()
 
-    @pytest.mark.run(order=1)
+    @pytest.mark.run(order=3)
     @data(*getCSVData("C:/Users/lenovo/PycharmProjects/letskodeit/testdata.csv"))
     @unpack
     def test_invalidEnrollment(self, course_name, cc_num, cc_exp, cc_cvv, zip_code):

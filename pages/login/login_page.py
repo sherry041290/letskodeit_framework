@@ -7,7 +7,6 @@ from base.basepage import BasePage
 class LoginPage(BasePage):
     log = cl.customLogger(logging.DEBUG)
 
-
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
@@ -40,7 +39,8 @@ class LoginPage(BasePage):
         self.clickLoginButton()
 
     def verifyLoginSuccessful(self):
-        result = self.isElementPresent("//*[@id='navbar']//span[text()='Test User']", locatorType="xpath")
+        result = self.isElementPresent("//div[@id='navbar']//li[@class='dropdown'] ", locatorType="xpath")
+        # //*[@id='navbar']//span[text()='Test User']
         return result
 
     def verifyLoginFailed(self):
@@ -61,8 +61,8 @@ class LoginPage(BasePage):
 
     def logout(self):
         self.nav.navigateToUseSetting()
-        # self.elementClick(locator="Log Out", locatorType="link")
-        self.elementClick(locator="//div[@id='navbar']//a[@href='/sign_out']",
-                          locatorType="xpath")
+        logoutLinkElement = self.waitForElement(locator="//div[@id='navbar']//a[@href='/sign_out']",
+                                                locatorType="xpath", pollFrequency=1)
+        self.elementClick(element=logoutLinkElement)
 
 
